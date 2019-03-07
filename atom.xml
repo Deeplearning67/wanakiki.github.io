@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Hexo</title>
+  
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2019-03-07T14:49:36.170Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>John Doe</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>括号匹配</title>
+    <link href="http://yoursite.com/2019/03/07/%E6%8B%AC%E5%8F%B7%E5%8C%B9%E9%85%8D/"/>
+    <id>http://yoursite.com/2019/03/07/括号匹配/</id>
+    <published>2019-03-07T14:48:59.000Z</published>
+    <updated>2019-03-07T14:49:36.170Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="括号匹配问题"><a href="#括号匹配问题" class="headerlink" title="括号匹配问题"></a>括号匹配问题</h1><p>这个学期开始学数据结构，第一节课老师又提出了这个经典的问题。</p><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>给出一个只包含’(‘和’)’的字符串，判断该字符串中的括号是否匹配。并将匹配的括号用’_’代替，不匹配的括号用’$’标出。例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入：</span><br><span class="line">(())()))</span><br><span class="line">输出：</span><br><span class="line">(())()))</span><br><span class="line">______$$</span><br></pre></td></tr></table></figure></p><h2 id="简单解法"><a href="#简单解法" class="headerlink" title="简单解法"></a>简单解法</h2><p>括号匹配问题是刚开始学习C语言的时候就接触的问题，当时老师引入这个问题的原因可能是为了介绍栈的概念，但是当时班上大多数人都采取了直接用数组模拟的方法。把整个字符串录入，之后遍历整个字符串，遇到右括号就向前寻找是否存在对应的左括号，进行判断。C++代码如下：</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">string</span> str, tmp;    </span><br><span class="line">    <span class="comment">//tmp用于保留原来的字符串，为了方便直接用string输入</span></span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; str;</span><br><span class="line">    tmp = str;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; str.length(); i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(str[i] == <span class="string">')'</span>)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = i - <span class="number">1</span>; j &gt;= <span class="number">0</span>; j--)&#123;</span><br><span class="line">                <span class="keyword">if</span>(str[j] == <span class="string">'('</span>)&#123;</span><br><span class="line">                    str[i] = str[j] = <span class="string">'_'</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; str.length(); i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(str[i] != <span class="string">'_'</span>)</span><br><span class="line">            str[i] = <span class="string">'$'</span>;   <span class="comment">//找出不匹配的括号</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; tmp &lt;&lt; <span class="built_in">endl</span> &lt;&lt; str;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="使用栈来解决"><a href="#使用栈来解决" class="headerlink" title="使用栈来解决"></a>使用栈来解决</h2><p>首先忽略掉不匹配括号的标记问题，聚焦于判断整个字符串是否存在不匹配的括号。要看字符串是否匹配，只要看左括号是否有对应的右括号，或者右括号是否有对应的左括号，问题解决方法是相同的。</p><p>读入一个左括号我们就可以把它压入栈中，遇到右括号就弹出栈中的左括号。如果所有的右括号都读取完，栈中还有左括号，或者读入一个右括号栈中已经没有了括号，就意味着该字符串中的括号不匹配。C++代码：</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">char</span>&gt; s;</span><br><span class="line">    <span class="built_in">string</span> tmp;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; tmp;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; tmp.length(); i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(tmp[i] == <span class="string">'('</span>)</span><br><span class="line">            s.push(tmp[i]);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(s.empty())</span><br><span class="line">                <span class="built_in">cout</span> &lt;&lt; <span class="string">"FALSE"</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                s.pop();</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(!s.empty())</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"FALSE"</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"TRUE"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>上面这段代码完全可以不用栈，设置一个变量来记录当前拥有的左括号的数量就可以大大简化代码。</p><p>如果我们想要知道是哪几个字符不匹配，我的想法是直接将字符的索引压入栈中，因为只有一种括号，把字符压入栈中实际上是不必要之举。将上面的代码输出错误的地方改成记录错误的下标，就可以将出错字符的下标记录下来，当所有的右括号都判断完之后，栈中剩余的所有左括号下标也同样要记录下来。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;括号匹配问题&quot;&gt;&lt;a href=&quot;#括号匹配问题&quot; class=&quot;headerlink&quot; title=&quot;括号匹配问题&quot;&gt;&lt;/a&gt;括号匹配问题&lt;/h1&gt;&lt;p&gt;这个学期开始学数据结构，第一节课老师又提出了这个经典的问题。&lt;/p&gt;
+&lt;h2 id=&quot;问题描述&quot;&gt;&lt;a hr
+      
+    
+    </summary>
+    
+    
+      <category term="数据结构" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>My New Post</title>
+    <link href="http://yoursite.com/2018/08/10/My-New-Post/"/>
+    <id>http://yoursite.com/2018/08/10/My-New-Post/</id>
+    <published>2018-08-10T12:27:33.000Z</published>
+    <updated>2018-08-12T03:21:52.192Z</updated>
+    
+    <content type="html"><![CDATA[<p>这是一个开始✔</p><hr><p>伟哥🐮🍺</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;这是一个开始✔&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;伟哥🐮🍺&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://yoursite.com/2018/08/10/hello-world/"/>
+    <id>http://yoursite.com/2018/08/10/hello-world/</id>
+    <published>2018-08-10T12:20:43.099Z</published>
+    <updated>2018-08-10T12:20:43.109Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+</feed>
